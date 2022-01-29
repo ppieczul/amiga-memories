@@ -32,7 +32,7 @@ waitframe2:MACRO
 lines0=254
 
 	incdir	my:Incl/
-	section code,code_p
+	section code,code_C
 start_abs:
 	lea	Mod,a0
 	move.l	a0,tp_data
@@ -122,6 +122,19 @@ NoZZ:	tst.b	Zez+1
 	bsr	RunJ
 	bsr	RunED
 	bsr.w	exitvblk
+
+	move.l	$4,a6
+	lea	GRlib(pc),a1
+	jsr	-408(a6)
+	move.l	d0,a0
+	move.l	$26(a0),$dff080
+	move.w	d0,$dff088
+	move.l	d0,a1
+	jsr	-414(a6)
+	moveq	#0,d0
+	move.w	#$83ff,$dff096
+	rts
+grlib:	dc.b	'graphics.library',0,0
 	rts
 
 clearscreen_abs:
@@ -1394,6 +1407,7 @@ vblk_abs:
 
 	move.w	#$0020,$dff09c
 	movem.l	(sp)+,d0-d7/a0-a6
+	rte
 	jmp	stary_abs-2
 
 wrong_abs:
@@ -2224,7 +2238,7 @@ CuCube:	bsr.b	Whitex
 	lea	Okey0,a1
 	move.l	a1,Vblk_Ptr
 	
-	waitframe
+	waitframeZ
 	lea	copper0,a0
 	move.l	a0,$dff084
 	lea	SprCopper0,a0
@@ -3376,7 +3390,7 @@ crw:	swap	d0
 	dbra	d7,crw
 
 	clr.l	Counter
-	waitframe
+	waitframeZ
 	lea	copper,a0
 	move.l	a0,$dff084
 	lea	sprcopper0,a0
@@ -8244,7 +8258,7 @@ MvUpED:	waitblit
 waitED:	btst	#6,$bfe001
 	beq.b	waitED
 
-	waitframe
+	waitframeZ
 	dbra	d6,StepED
 
 	move.l	screennED,a1
@@ -8297,7 +8311,7 @@ screennED:	dc.l	0
 	incdir	my:
 	include	PPackerDecrunch.s
 
-	section data,data_p
+	;section data,data_p
 
 
 textED:
@@ -8407,8 +8421,8 @@ DC.B ' I SEND MY PERSONAL '
 DC.B '    GREETINGS TO    ',$d
 DC.B '      MTC/ILS       ',$d
 DC.B ' WITHOUT YOUR 1200  '
-DC.B ' THIS COULD NOT BE  '
-DC.B '       DONE !       ',$D,$D,$D
+DC.B ' THIS CAN NOT HAVE  '
+DC.B '     BEEN DONE !    ',$D,$D,$D
 DC.B ' IF YOU ARE LOOKING ',$d
 DC.B '  FOR NEW CONTACTS  ',$d
 DC.B '   AND FRIENDSHIP   ',$d
@@ -9341,7 +9355,7 @@ PalEd:	dc.w $0000,$0fff,$0eee,$0ddd
 	dc.w $0010,$0020,$0030,$0040
 	dc.w $0151,$0262,$0373,$0484
 
-	section	dupa,code_c
+	;section	dupa,code_c
 copperED:
 	dc.l	$009683e0,$00960020
 LEFED:	dc.l	$008e2c50,$00902Cd1
@@ -10000,7 +10014,7 @@ QuitOkF:lea	Return_Abs,a0
 	rts
 
 
-	section	coppers,data_c
+	;section	coppers,data_c
 
 PCopper:
 	dc.l	$009683e0,$00968020
@@ -10135,7 +10149,7 @@ c12M:	dc.l	$00e40000
 	dc.l	$00e60000
 	dc.l	$01003000
 makeM:	blk.l	4*linesM+1
-	dc.l	$00902a00
+	dc.l	$00902b00
 	dc.l	$01001000
 	dc.l	$0108ffd8
 	dc.l	$fffffffe
@@ -10667,7 +10681,7 @@ c13W:	dc.l	$00e00000
 	dc.l	$00f20000
 	dc.l	$00f40000
 	dc.l	$00f60000
-	dc.l	$de07fffe
+	dc.l	$df07fffe
 cols4W:	dc.w $0180,0,$0182,0,$0184,0,$0186,0
 	dc.w $0188,0,$018a,0,$018c,0,$018e,0
 	dc.w $0190,0,$0192,0,$0194,0,$0196,0
@@ -10887,7 +10901,7 @@ c11_2_b:dc.l	$00e00000
 	dc.l	$01000000
 	dc.w	$ffff,$fffe
 
-		section	chips,data_c
+		;section	chips,data_c
 
 	incdir	my:incl/
 
@@ -10896,7 +10910,7 @@ LodzioF:	incbin	Trsi.lodzio.raw
 ball_2_b:	incbin	ball2.raw
 		blk.b	40
 
-		section	external,data_p
+		;section	external,data_p
 
 module2:	incbin	endmodule
 endmodule2:
@@ -10983,9 +10997,8 @@ picpJ:		incbin	wkr.raw.pp
 PicJe:
 NdPPED:		incbin	EndLogo.raw.pp
 NdPPEndED:
-Putpoints:	ds.b	$a700
 
-		section	puste,data_c
+		;section	puste,data_c
 endmodul:
 mod:		incbin	module
 
@@ -10998,7 +11011,7 @@ Free:		incbin	RobakAnim.pp
 srakaQ:		incbin	fonty32chala.raw
 		blk.b	100,0
 ZoomPicQ:	incbin	zoompic.raw
-		ds.b	$20000-$9100-$a6d2
+		ds.b	$20000-$9100
 as:
 
 RamkaUpX	=Free+$2940
@@ -11035,7 +11048,7 @@ tabl2L		=Ttabl1L+60000
 ttabl2L		=Tabl2L+30000
 screen		=Ttabl2L+30000
 picL		=screen
-;PutPoints	=picL+$1f40*6
+PutPoints	=picL+$1f40*6
 
 font		=Tabl1
 Signs1		=Font+$1680
@@ -11096,6 +11109,7 @@ ScreenED	=LogoED+26000		;$2800*3
 
 
 end
+
 
 
 
