@@ -1,22 +1,22 @@
-run:	lea	pstr,a0
-	moveq	#[pstrend-pstr]/2-1,d7
-stilp:	move.w	(a0)+,d0
-	bmi.b	stil
+runa:	lea	pstra,a0
+	moveq	#[pstrenda-pstra]/2-1,d7
+stilpa:	move.w	(a0)+,d0
+	bmi.b	stila
 	asl.w	#2,d0
 	move.w	d0,-2(a0)
-stil:	dbra	d7,stilp
+stila:	dbra	d7,stilpa
 
-	lea	mul40,a0
+	lea	mul40a,a0
 	moveq	#0,d0
-lopklop:move.l	d0,d1
+lopklopa:move.l	d0,d1
 	mulu	#40,d1
 	move.w	d1,(a0)+
 	addq.l	#1,d0
 	cmp.l	#$100,d0
-	bne.b	lopklop
+	bne.b	lopklopa
 
-	lea	single,a1
-	lea	screen,a0
+	lea	singlea,a1
+	lea	screena,a0
 	move.l	a0,(a1)
 	add.l	#$1900*3,a0
 	move.l	a0,4(a1)
@@ -25,117 +25,117 @@ lopklop:move.l	d0,d1
 	add.l	#$1900*3,a0
 	move.l	a0,12(a1)
 
-	lea	Pic1,a0
+	lea	Pic1a,a0
 	move.l	a0,d0
-	lea	c10,a1
+	lea	c10a,a1
 	moveq	#2,d1
-clop2:	swap	d0
+clop2a:	swap	d0
 	move.w	d0,2(a1)
 	swap	d0
 	move.w	d0,6(a1)
 	addq.l	#8,a1
 	add.l	#$4d8,d0
-	dbra	d1,clop2
+	dbra	d1,clop2a
 
-	lea	Pic2,a0
+	lea	Pic2a,a0
 	move.l	a0,d0
-	lea	c20,a1
+	lea	c20a,a1
 	moveq	#2,d1
-clop3:	swap	d0
+clop3a:	swap	d0
 	move.w	d0,2(a1)
 	swap	d0
 	move.w	d0,6(a1)
 	addq.l	#8,a1
 	add.l	#$a28,d0
-	dbra	d1,clop3
+	dbra	d1,clop3a
 
 	moveq	#2,d1
-	bsr.w	setscr
-	move.l	single+12,a0
+	bsr.w	setscra
+	move.l	singlea+12,a0
 	
 
-	lea	bufor,a0
-	lea	stary,a1
-	lea	vblk,a2
-	lea	next,a3
+	lea	bufora,a0
+	lea	starya,a1
+	lea	vblka,a2
+	lea	nexta,a3
 
 	move.w	$dff01c,(a0)
 	move.w	#$7fff,$dff09a
 	move.l	$6c,(a1)
 	move.l	a2,$6c
-	move.l	stary,$02(a3)
+	move.l	starya,$02(a3)
 	
 	move.w	(a0),d0
 	or.w	#$8020,d0
 	move.w	d0,$dff09a
 
-	lea	copper,a0
+	lea	coppera,a0
 	move.l	a0,$dff080
 	move.w	d0,$dff088
 
-mysz:	btst	#6,$bfe001
-	bne.s	mysz
+mysza:	btst	#6,$bfe001
+	bne.s	mysza
 	
-quit:  	move.w	#$7fff,$dff09a
-	move.l	stary,$6c
-	move.w	bufor,d0
+quita:  	move.w	#$7fff,$dff09a
+	move.l	starya,$6c
+	move.w	bufora,d0
 	or.w	#$8000,d0
 	move.w	d0,$dff09a
 	rts
 
 
-vblk:	movem.l	d0-d7/a0-a6,-(sp)
+vblka:	movem.l	d0-d7/a0-a6,-(sp)
 	move.w	$dff01e,d0
 	and.w	#$0020,d0
-	bne.s	okey
-	bra.s	exit2
-exit1:
+	bne.s	okeya
+	bra.s	exit2a
+exit1a:
 ;	move.w	#$8,$dff180
 	move.w	#$0020,$dff09c
-exit2:	movem.l	(sp)+,d0-d7/a0-a6
-next:	jmp	0.l
+exit2a:	movem.l	(sp)+,d0-d7/a0-a6
+nexta:	jmp	0.l
 
-okey:	lea	single,a0
+okeya:	lea	singlea,a0
 	movem.l	(a0),d0-d2
 	exg.l	d0,d1
 	exg.l	d0,d2
 	movem.l	d0-d2,(a0)
 
 	moveq	#2,d1
-	bsr.w	setscr
+	bsr.w	setscra
 
-	bsr.w	clear
+	bsr.w	cleara
 
-	lea	PreAlfa,a0
-	lea	destp,a4
-	lea	points,a5
-	move.l	#[pointsend-points]/6-1,d7
+	lea	PreAlfaa,a0
+	lea	destpa,a4
+	lea	pointsa,a5
+	move.l	#[pointsenda-pointsa]/6-1,d7
 
 	moveq	#0,d0
 	moveq	#0,d1
 	moveq	#0,d5
 
-	lea	sinus,a6
+	lea	sinusa,a6
 
-	move.w	alfa,d2
+	move.w	alfaa,d2
 	add.w	d2,d2
 	move.w	(a6,d2.w),2(a0)
 	add.w	#180,a6
 	move.w	(a6,d2.w),(a0)
 
-	move.w	alfa+2,d2
+	move.w	alfaa+2,d2
 	add.w	d2,d2
 	move.w	(a6,d2.w),6(a0)
 	add.w	#180,a6
 	move.w	(a6,d2.w),4(a0)
 
-	move.w	alfa+4,d2
+	move.w	alfaa+4,d2
 	add.w	d2,d2
 	move.w	(a6,d2.w),10(a0)
 	add.w	#180,a6
 	move.w	(a6,d2.w),8(a0)
 
-cpr2:	move.w	(a5)+,d0
+cpr2a:	move.w	(a5)+,d0
 	move.w	(a5)+,d1
 	move.w	(a5)+,d5
 
@@ -189,8 +189,8 @@ cpr2:	move.w	(a5)+,d0
 	swap	d1
 	add.w	d2,d1
 
-lefty:	;move.l	#$2000,d3
-	sub.l	#vx*2*40,d5
+leftya:	;move.l	#$2000,d3
+	sub.l	#vxa*2*40,d5
 	asl.l	#3,d5
 	move.l	d5,d3
 	muls.w	d3,d0
@@ -200,23 +200,23 @@ lefty:	;move.l	#$2000,d3
 
 	move.w	d0,(a4)+
 	move.w	d1,(a4)+
-	dbra	d7,cpr2
+	dbra	d7,cpr2a
 
-	bsr.w	fill
+	bsr.w	filla
 
-	lea	dodp,a1
-	lea	bplp,a2
-	move.l	single,a3
-	lea	destp,a4
+	lea	dodpa,a1
+	lea	bplpa,a2
+	move.l	singlea,a3
+	lea	destpa,a4
 	move.l	a3,a5
-	lea	pstr,a6
+	lea	pstra,a6
 
 	move.w	(a6)+,d0
 
 	move.w	d0,(a1)
 	move.w	d0,2(a1)
 
-rept:	move.w	(a1),d3
+repta:	move.w	(a1),d3
 
 	move.w	(a6),d4
 	move.w	2(a6),d5
@@ -233,29 +233,29 @@ rept:	move.w	(a1),d3
 	mulu.w	d2,d1
 
 	cmp.w	d1,d0
-	bpl.b	Pluk
+	bpl.b	Pluka
 
-wait:	move.w	(a6)+,d0
-	bpl.b	wait	
+waita:	move.w	(a6)+,d0
+	bpl.b	waita	
 	cmp.w	#-4,d0
-	beq.b	wait
+	beq.b	waita
 	subq.l	#2,a6
-	bra.b	Pluk
+	bra.b	Pluka
 
-rept2:	move.w	(a1),d1
+rept2a:	move.w	(a1),d1
 	move.w	d6,(a1)
 
 	move.w	(a4,d1.w),d2
 	move.w	2(a4,d1.w),d3
 	move.w	2(a4,d6.w),d1
 	move.w	(a4,d6.w),d0
-	bsr.w	line
+	bsr.w	linea
 
-Pluk:	move.w	(a6)+,d6
-	bpl.b	Rept2
+Pluka:	move.w	(a6)+,d6
+	bpl.b	Rept2a
 
 	cmp.b	#-1,d6
-	beq.b	quity
+	beq.b	quitya
 
 	move.l	a5,d7
 	move.w	(a6)+,d0
@@ -268,78 +268,78 @@ Pluk:	move.w	(a6)+,d6
 	swap	d0
 	move.w	2(a4,d0.w),d1
 	move.w	(a4,d0.w),d0
-	bsr.w	line
+	bsr.w	linea
 
 	move.w	(a6),(a1)
 	move.w	(a6)+,2(a1)
 	move.l	d7,a3
 	cmp.b	#-4,d6
-	beq.b	pluk
-	bra.w	rept
+	beq.b	pluka
+	bra.w	repta
 
-quity:
+quitya:
 
-	lea	alfa,a0
-	lea	dodaj,a1
+	lea	alfaa,a0
+	lea	dodaja,a1
 
 	moveq	#2,d0
-addlv2:	move.w	(a1),d1
+addlv2a:	move.w	(a1),d1
 	add.w	d1,(a0)
 	cmp.w	#360,(a0)
-	blt.b	nookr2
+	blt.b	nookr2a
 	sub.w	#360,(a0)
-nookr2:	tst.w	(a0)
-	bge.b	nookr3
+nookr2a:	tst.w	(a0)
+	bge.b	nookr3a
 	add.w	#360,(a0)
-nookr3:	addq.l	#2,a0
+nookr3a:	addq.l	#2,a0
 	addq.l	#2,a1
-	dbra	d0,addlv2
+	dbra	d0,addlv2a
 
-	lea	Msin,a0
-	move.l	SinPos,d0
-	move.l	Addz,d1
+	lea	Msina,a0
+	move.l	SinPosa,d0
+	move.l	Addza,d1
 	add.l	d1,d1
-	add.l	d1,SinPos
+	add.l	d1,SinPosa
 
-	cmp.l	#MEndSin-Msin,SinPos
-	blt.b	NME
-	sub.l	#MEndSin-Msin,SinPos
-	clr.l	sinpos
-NME:	add.l	d0,a0
+	cmp.l	#MEndSina-Msina,SinPosa
+	blt.b	NMEa
+	sub.l	#MEndSina-Msina,SinPosa
+	clr.l	sinposa
+NMEa:	add.l	d0,a0
 	move.w	(a0),d0
 
-	move.w	d0,Points+4
-	move.w	d0,Points+4+6
-	move.w	d0,Points+4+12
-	move.w	d0,Points+4+18
+	move.w	d0,Pointsa+4
+	move.w	d0,Pointsa+4+6
+	move.w	d0,Pointsa+4+12
+	move.w	d0,Pointsa+4+18
 
-	add.w	#25*vx,d0
+	add.w	#25*vxa,d0
 
-	move.w	d0,Points+4+24
-	move.w	d0,Points+4+30
-	move.w	d0,Points+4+36
-	move.w	d0,Points+4+42
+	move.w	d0,Pointsa+4+24
+	move.w	d0,Pointsa+4+30
+	move.w	d0,Pointsa+4+36
+	move.w	d0,Pointsa+4+42
 
-	subq.w	#1,Timer
-	bgt.b	NoSCH
+	subq.w	#1,Timera
+	bgt.b	NoSCHa
 
-	lea	Script,a0
-	move.l	ScriptPos,d0
-	add.l	#10,ScriptPos
-	cmp.l	#ScriptEnd-Script,ScriptPos
-	blt.b	NoSE
-;	move.l	#Script2-Script,ScriptPos
-	clr.l	scriptpos
-NoSE:	add.l	d0,a0
-	move.w	(a0)+,Timer
-	move.l	(a0)+,Dodaj
-	move.w	(a0)+,Dodaj+4
-	move.w	(a0)+,Addz+2
-NoSCH:
+	lea	Scripta,a0
+	move.l	ScriptPosa,d0
+	add.l	#10,ScriptPosa
+	cmp.l	#ScriptEnda-Scripta,ScriptPosa
+	blt.b	NoSEa
+;	move.l	#Script2-Scripta,ScriptPosa
+	clr.l	scriptposa
+NoSEa:	add.l	d0,a0
+	move.w	(a0)+,Timera
+	move.l	(a0)+,Dodaja
+	move.w	(a0)+,Dodaja+4
+	move.w	(a0)+,Addza+2
+NoSCHa:
 
-	bra.w	exit1
+	bra.w	exit1a
 
-line:	movem.l	d0-d6/a0-a6,-(sp)
+linea:	movem.l	d0-d6/a0-a6,-(sp)
 
 	add.w	#160,d0
 	add.w	#160,d2
@@ -347,17 +347,17 @@ line:	movem.l	d0-d6/a0-a6,-(sp)
 	add.w	#110,d3
 
 
-	lea	mul40,a1
+	lea	mul40a,a1
 	lea	$dff000,a5
 
 	cmp.w	d3,d1
-	beq.w	l_quit
-	bhi.b	l_noych
+	beq.w	l_quita
+	bhi.b	l_noycha
 
 	exg.l	d1,d3
 	exg.l	d0,d2
 
-l_noych:subq.w	#1,d1
+l_noycha:subq.w	#1,d1
 
 	moveq	#0,d4
 	move.w	d1,d4
@@ -374,32 +374,32 @@ l_noych:subq.w	#1,d1
 	sub.w	d1,d3
 	roxl.b	#1,d5
 	tst.w	d3
-	bge.b	y2Gy1
+	bge.b	y2Gy1a
 	neg.w	d3
-y2Gy1:
+y2Gy1a:
 	sub.w	d0,d2
 	roxl.b	#1,d5
 	tst.w	d2
-	bge.b	x2Gx1
+	bge.b	x2Gx1a
 	neg.w	d2
-x2Gx1:
+x2Gx1a:
 	move.w	d3,d1
 	sub.w	d2,d1
-	bge.b	dyGdx
+	bge.b	dyGdxa
 	exg.l	d2,d3
-dyGdx:
+dyGdxa:
 	roxl.b	#1,d5
 	add.w	d2,d2
-	move.b	OctantsF(pc,d5.w),d5
+	move.b	OctantsFa(pc,d5.w),d5
 
-WBlit:	btst.b	#14,$02(a5)
-	bne.b	WBlit
+WBlita:	btst.b	#14,$02(a5)
+	bne.b	WBlita
 
 	move.w	d2,$62(a5)
 	sub.w	d3,d2
-	bge.b	SignNl
+	bge.b	SignNla
 	or.b	#$40,d5
-SignNl:
+SignNla:
 	move.w	d2,$52(a5)
 	sub.w	d3,d2
 	move.w	d2,$64(a5)
@@ -420,22 +420,22 @@ SignNl:
 	addq.b	#2,d3
 	move.w	d3,$58(a5)
 
-l_quit:	movem.l	(sp)+,d0-d6/a0-a6
+l_quita:	movem.l	(sp)+,d0-d6/a0-a6
 	rts
-OctantsN:
+OctantsNa:
 	dc.b	1,17,09,21,5,25,13,29
-OctantsF:
+OctantsFa:
 	dc.b	3,19,11,23,7,27,15,31
 
 
-waitblit:	
+waitblita:	
 	btst	#14,$dff002
-waitbl:	btst	#14,$dff002
-	bne.s	waitbl
+waitbla:	btst	#14,$dff002
+	bne.s	waitbla
 	rts
 
-clear:	bsr.b	waitblit
-	move.l	single,a6
+cleara:	bsr.b	waitblita
+	move.l	singlea,a6
 	addq.l	#4,a6
 	move.l	a6,$dff054
 	move.l	#$01000000,$dff040
@@ -443,9 +443,9 @@ clear:	bsr.b	waitblit
 	move.w	#[480<<6]!15,$dff058
 	rts
 
-fill:	move.l	single+4,d0
+filla:	move.l	singlea+4,d0
 	add.l	#$1900*3-6,d0
-	bsr.b	waitblit
+	bsr.b	waitblita
 	move.l	#$ffffffff,$dff044
 	move.l	d0,$dff050
 	move.l	d0,$dff054
@@ -456,46 +456,46 @@ fill:	move.l	single+4,d0
 	rts
 
 
-setscr:
-	move.l	single+8,d0
+setscra:
+	move.l	singlea+8,d0
 	add.l	#48*40,d0
-	lea	c11,a1
-clop:	swap	d0
+	lea	c11a,a1
+clopa:	swap	d0
 	move.w	d0,2(a1)
 	swap	d0
 	move.w	d0,6(a1)
 	addq.l	#8,a1
 	add.l	#$1900,d0
-	dbra	d1,clop
+	dbra	d1,clopa
 	rts
 
 
-vx=15
-yx=15
+vxa=15
+yxa=15
 
-points:
+pointsa:
 
-dc.w	-05*vx,+05*yx,+00*vx
-dc.w	+05*vx,+05*yx,+00*vx
-dc.w	+05*vx,-05*yx,+00*vx
-dc.w	-05*vx,-05*yx,+00*vx
-dc.w	-05*vx,+05*yx,+36*vx
-dc.w	+05*vx,+05*yx,+36*vx
-dc.w	+05*vx,-05*yx,+36*vx
-dc.w	-05*vx,-05*yx,+36*vx
+ dc.w	-05*vxa,+05*yxa,+00*vxa
+dc.w	+05*vxa,+05*yxa,+00*vxa
+dc.w	+05*vxa,-05*yxa,+00*vxa
+dc.w	-05*vxa,-05*yxa,+00*vxa
+dc.w	-05*vxa,+05*yxa,+36*vxa
+dc.w	+05*vxa,+05*yxa,+36*vxa
+dc.w	+05*vxa,-05*yxa,+36*vxa
+dc.w	-05*vxa,-05*yxa,+36*vxa
 
-dc.w	-10*vx,+10*yx,+00*vx
-dc.w	+10*vx,+10*yx,+00*vx
-dc.w	+10*vx,-10*yx,+00*vx
-dc.w	-10*vx,-10*yx,+00*vx
+dc.w	-10*vxa,+10*yxa,+00*vxa
+dc.w	+10*vxa,+10*yxa,+00*vxa
+dc.w	+10*vxa,-10*yxa,+00*vxa
+dc.w	-10*vxa,-10*yxa,+00*vxa
 
-dc.w	-15*vx,+15*yx,+00*vx
-dc.w	+15*vx,+15*yx,+00*vx
-dc.w	+15*vx,-15*yx,+00*vx
-dc.w	-15*vx,-15*yx,+00*vx
-pointsend:
+dc.w	-15*vxa,+15*yxa,+00*vxa
+dc.w	+15*vxa,+15*yxa,+00*vxa
+dc.w	+15*vxa,-15*yxa,+00*vxa
+dc.w	-15*vxa,-15*yxa,+00*vxa
+pointsenda:
 
-pstr:
+pstra:
 dc.w	0,1,2,3
 dc.w	-4,1
 dc.w	0,1,2,3
@@ -526,41 +526,41 @@ dc.w	-3,2
 dc.w	15,14,13,12,15
 
 dc.w	-1,-1,-1,-1,-1,-1
-pstrend:
+pstrenda:
 
-destp:	blk.b	200,0
+destpa:	blk.b	200,0
 
 even
 
-bufor:		dc.w	0
-stary:		dc.l	0
-alfa:		dc.w	0,0,0,0
-dodaj:		dc.w	0,6,0
-posx:		dc.l	0
-scract:		dc.l	0
-single:		dc.l	0,0,0,0
-dodp:		dc.l	0,0
-pointsp:	dc.l	0
-pstrp:		dc.l	0
-pointsl:	dc.l	0
-addz:		dc.l	0
-object:		dc.l	-1
-bplp:		dc.l	0,$1900,$1900*2,$1900*3
-prealfa:	dc.l	0,0,0,0,0,0,0,0
-SinPos:		dc.l	0
-timer:		dc.l	0
-scriptpos:	dc.l	0
+bufora:		dc.w	0
+starya:		dc.l	0
+alfaa:		dc.w	0,0,0,0
+dodaja:		dc.w	0,6,0
+posxa:		dc.l	0
+scracta:		dc.l	0
+singlea:		dc.l	0,0,0,0
+dodpa:		dc.l	0,0
+pointspa:	dc.l	0
+pstrpa:		dc.l	0
+pointsla:	dc.l	0
+addza:		dc.l	0
+objecta:		dc.l	-1
+bplpa:		dc.l	0,$1900,$1900*2,$1900*3
+prealfaa:	dc.l	0,0,0,0,0,0,0,0
+SinPosa:		dc.l	0
+timera:		dc.l	0
+scriptposa:	dc.l	0
 
-Msin:	DC.W	$002D,$003C,$004B,$005A,$0069,$0069,$0078,$0087,$0096,$0096
-	DC.W	$00A5,$00A5,$00B4,$00B4,$00B4,$00B4,$00B4,$00B4,$00A5,$00A5
-	DC.W	$0096,$0096,$0087,$0078,$0069,$0069,$005A,$004B,$003C,$002D
-	DC.W	$000F,$0000,$FFF1,$FFE2,$FFD3,$FFD3,$FFC4,$FFB5,$FFA6,$FFA6
-	DC.W	$FF97,$FF97,$FF88,$FF88,$FF88,$FF88,$FF88,$FF88,$FF97,$FF97
-	DC.W	$FFA6,$FFA6,$FFB5,$FFC4,$FFD3,$FFD3,$FFE2,$FFF1,$0000,$000F
-Mendsin:
+Msina:	DC.w	$002D,$003C,$004B,$005A,$0069,$0069,$0078,$0087,$0096,$0096
+	DC.w	$00A5,$00A5,$00B4,$00B4,$00B4,$00B4,$00B4,$00B4,$00A5,$00A5
+	DC.w	$0096,$0096,$0087,$0078,$0069,$0069,$005A,$004B,$003C,$002D
+	DC.w	$000F,$0000,$FFF1,$FFE2,$FFD3,$FFD3,$FFC4,$FFB5,$FFA6,$FFA6
+	DC.w	$FF97,$FF97,$FF88,$FF88,$FF88,$FF88,$FF88,$FF88,$FF97,$FF97
+	DC.w	$FFA6,$FFA6,$FFB5,$FFC4,$FFD3,$FFD3,$FFE2,$FFF1,$0000,$000F
+Mendsina:
 
 
-script:
+scripta:
 	dc.w	90,0,0,0,1
 	dc.w	21,0,4,0,1
 	dc.w	90,0,0,0,1
@@ -592,11 +592,11 @@ script:
 	dc.w	20,0,0,0,15
 	dc.w	500,20,15,12,15
 
-scriptend:
+scriptenda:
 
 even
 
-copper:	dc.l	$009683c0,$01000000
+coppera:	dc.l	$009683c0,$01000000
 
 	dc.l	$008e2081,$009028c1
 	dc.w	$0108,0,$010A,0
@@ -616,7 +616,7 @@ copper:	dc.l	$009683c0,$01000000
 	dc.w $0188,$0909,$018a,$0b0b,$018c,$0d0d,$018e,$0f0f
 
 	dc.l	$4107fffe
-c10:	dc.l	$00e00000
+c10a:	dc.l	$00e00000
 	dc.l	$00e20000
 	dc.l	$00e40000
 	dc.l	$00e60000
@@ -633,7 +633,7 @@ c10:	dc.l	$00e00000
 
 	dc.l	$6c07fffe
 
-c11:	dc.l	$00e00000
+c11a:	dc.l	$00e00000
 	dc.l	$00e20000
 	dc.l	$00e40000
 	dc.l	$00e60000
@@ -677,8 +677,10 @@ c11:	dc.l	$00e00000
 	dc.l	$018a0000,$018c0000
 	dc.l	$018e0000
 
+	dc.l	-2
+
 	dc.l	$e907fffe
-c20:	dc.l	$00e00000
+c20a:	dc.l	$00e00000
 	dc.l	$00e20000
 	dc.l	$00e40000
 	dc.l	$00e60000
@@ -696,7 +698,7 @@ c20:	dc.l	$00e00000
 	dc.l	$ffddfffe,$4007fffe,$01000000
 	dc.l	-2
 
-sinus:
+sinusa:
 	DC.B	$00,$00,$02,$3B,$04,$77,$06,$B2
 	DC.B	$08,$ED,$0B,$27,$0D,$61,$0F,$99
 	DC.B	$11,$D0,$14,$05,$16,$39,$18,$6C
@@ -878,13 +880,13 @@ sinus:
 	DC.B	$EE,$2F,$F0,$66,$F2,$9E,$F4,$D8
 	DC.B	$F7,$12,$F9,$4D,$FB,$88,$FD,$C4
 
-mul40:	blk.w	256,0	
+mul40a:	blk.w	256,0	
 
 	incdir	df0:
-pic1:	incbin	anal.iff
-pic2:	incbin	info.iff
+pic1a:	incbin	anal.iff
+pic2a:	incbin	info.iff
 
-screen:	blk.b	$4b00*4,0
+screena:	blk.b	$4b00*4,0
 
 
 

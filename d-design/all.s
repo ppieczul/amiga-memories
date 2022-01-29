@@ -1,6 +1,6 @@
 
 
-	lea	bufor,a0
+	lea	bufor(pc),a0
 	move.w	$dff01c,(a0)
 	move.w	#$7fff,$dff09a
 
@@ -25,7 +25,7 @@ aa:	clr.l	(a0)+
 
 	bsr	tp_end
 
-	move.w	bufor,d0
+	move.w	bufor(pc),d0
 	or.w	#$8000,d0
 	move.w	d0,$dff09a
 	rts
@@ -44,11 +44,11 @@ suck=yes	;das ya dick wanna b suckd ?
 
 tp_init:
 	lea	$dff002,a5
-	lea	tp_wait,a0
+	lea	tp_wait(pc),a0
 	move	#1,(a0)
 	clr	tp_pattcount-tp_wait(a0)
 	move	#6,tp_speed-tp_wait(a0)
-	move.l	tp_data,a1
+	move.l	tp_data(pc),a1
 	lea	28(a1),a1
 	move	(a1)+,d7
 	lea	(a1,d7.w),a2
@@ -76,7 +76,7 @@ tp_initpattok:
 	subq	#1,d7
 	lea	(a2,d0.w),a3
 	move.l	a3,d5
-	lea	tp_instlist,a2
+	lea	tp_instlist(pc),a2
 tp_initinst:
 	moveq	#0,d0
 	move.b	(a1)+,d0
@@ -113,7 +113,7 @@ tp_sampleinitloop2:
 tp_initsamplesok:
 	moveq	#0,d0
 	moveq	#63,d1
-	lea	tp_voice0dat,a1
+	lea	tp_voice0dat(pc),a1
 	move.b	d0,51(a1)
 	move	d1,52(a1)
 	move.b	d0,51+58(a1)
@@ -128,17 +128,17 @@ tp_initsamplesok:
 	move	d0,$d6(a5)
 	move	#$f,$94(a5)
 	move	#$2000,$98(a5)
-	lea	tp_mainint,a2
+	lea	tp_mainint(pc),a2
 	move.l	a2,tp_int1pon-tp_wait(a0)
 	if	vbruse
-	move.l	tp_vbr,a1
+	move.l	tp_vbr(pc),a1
 	move.l	$78(a1),tp_oldint-tp_wait(a0)
 	move.l	a2,$78(a1)
 	else
 	move.l	$78.w,tp_oldint-tp_wait(a0)
 	move.l	a2,$78.w
 	endc
-	lea	tp_voiceloopint,a2
+	lea	tp_voiceloopint(pc),a2
 	move.l	a2,tp_int3pon-tp_wait(a0)
 	lea	$bfd000,a1
 	ori.b	#2,$1001(a1)
@@ -164,10 +164,10 @@ tp_end:
 	move	#$f,$94(a5)
 	move	#$2000,$98(a5)
 	if	vbruse
-	move.l	tp_vbr,a1
-	move.l	tp_oldint,$78(a1)
+	move.l	tp_vbr(pc),a1
+	move.l	tp_oldint(pc),$78(a1)
 	else
-	move.l	tp_oldint,$78.w
+	move.l	tp_oldint(pc),$78.w
 	endc
 	rts
 
@@ -177,36 +177,36 @@ tp_mainint:
 	tst.b	$bfdd00
 	move	#$2000,$9a(a5)
 	moveq	#0,d4
-	lea	tp_wait,a0
+	lea	tp_wait(pc),a0
 	clr.b	tp_dmaon-tp_wait+1(a0)
 	subq	#1,(a0)
 	beq	tp_newline
 tp_playeffects:
-	lea	tp_voice0dat+6,a1
+	lea	tp_voice0dat+6(pc),a1
 	move	(a1)+,d0
 	beq.s	tp_novoice1
 	lea	$9e(a5),a3
 	jsr	tp_fxplaylist-4(pc,d0.w)
 tp_novoice1:
-	lea	tp_voice1dat+6,a1
+	lea	tp_voice1dat+6(pc),a1
 	move	(a1)+,d0
 	beq.s	tp_novoice2
 	lea	$ae(a5),a3
 	jsr	tp_fxplaylist-4(pc,d0.w)
 tp_novoice2:
-	lea	tp_voice2dat+6,a1
+	lea	tp_voice2dat+6(pc),a1
 	move	(a1)+,d0
 	beq.s	tp_novoice3
 	lea	$be(a5),a3
 	jsr	tp_fxplaylist-4(pc,d0.w)
 tp_novoice3:
-	lea	tp_voice3dat+6,a1
+	lea	tp_voice3dat+6(pc),a1
 	move	(a1)+,d0
 	beq.s	tp_novoice4
 	lea	$ce(a5),a3
 	jsr	tp_fxplaylist-4(pc,d0.w)
 tp_novoice4:
-	move.b	tp_dmaon+1,d4
+	move.b	tp_dmaon+1(pc),d4
 	if	funk
 	beq	tp_funkit
 	bra	tp_initnewsamples
@@ -230,7 +230,7 @@ tp_fxplaylist:
 	bra	tp_voicefxeddo
 
 tp_newline:
-	move	tp_speed,(a0)
+	move	tp_speed(pc),(a0)
 	tst	tp_pattdelay-tp_wait(a0)
 	beq.s	tp_nopatterndelay
 	subq	#1,tp_pattdelay-tp_wait(a0)
@@ -241,20 +241,20 @@ tp_nopatterndelay:
 	subq	#1,tp_pattcount-tp_wait(a0)
 	bpl	tp_playline
 	move	#63,tp_pattcount-tp_wait(a0)
-	move.l	tp_pattadr,a1
+	move.l	tp_pattadr(pc),a1
 	move	(a1)+,tp_pattadrpon-tp_wait(a0)
-	cmp.l	tp_pattadr2,a1
+	cmp.l	tp_pattadr2(pc),a1
 	bne.s	tp_pattadrok
-	move.l	tp_pattadr3,a1
+	move.l	tp_pattadr3(pc),a1
 tp_pattadrok:
 	move.l	a1,tp_pattadr-tp_wait(a0)
 tp_repeatit:
 	clr	tp_pattrepeat-tp_wait(a0)
-	move	tp_pattadrpon,d0
-	move.l	tp_pattlistadr,a1
+	move	tp_pattadrpon(pc),d0
+	move.l	tp_pattlistadr(pc),a1
 	movem	(a1,d0.w),d0-d3
 	moveq	#-2,d4
-	move.l	tp_pattdataadr,a1
+	move.l	tp_pattdataadr(pc),a1
 	move.b	d4,tp_voice0dat-tp_wait+1(a0)
 	add.l	a1,d0
 	move.l	d0,tp_voice0dat-tp_wait+2(a0)
@@ -268,7 +268,7 @@ tp_repeatit:
 	add.l	a1,d3
 	move.l	d3,tp_voice3dat-tp_wait+2(a0)
 
-	move	tp_shitpon,d0
+	move	tp_shitpon(pc),d0
 	bne.s	tp_noshit
 	moveq	#1,d0
 	bra.s	tp_shit
@@ -276,7 +276,7 @@ tp_noshit:
 	moveq	#0,d0
 tp_shit:
 
-	add	tp_newpattpos,d0
+	add	tp_newpattpos(pc),d0
 	beq.s	tp_playline
 	cmp.w	#64,d0
 	bne.s	tp_pattinrange
@@ -289,7 +289,7 @@ tp_pattinrange:
 
 	sub	d0,tp_pattcount-tp_wait(a0)
 	clr	tp_newpattpos-tp_wait(a0)
-	lea	tp_voice0dat+2,a1
+	lea	tp_voice0dat+2(pc),a1
 	subq	#1,d0
 	moveq	#3,d7
 tp_pattinitloop:
@@ -328,7 +328,7 @@ tp_playline:
 	move	#$1f0,d3
 	moveq	#-1,d7
 	move	d7,tp_shitpon-tp_wait(a0)
-	lea	tp_voice0dat+1,a1
+	lea	tp_voice0dat+1(pc),a1
 	addq.b	#2,(a1)+
 	bmi.s	tp_playvoice0end
 	moveq	#1,d4
@@ -336,7 +336,7 @@ tp_playline:
 	bsr	tp_playvoice
 tp_playvoice0end:
 	move	26(a1),$a4(a5)
-	lea	tp_voice1dat+1,a1
+	lea	tp_voice1dat+1(pc),a1
 	addq.b	#2,(a1)+
 	bmi.s	tp_playvoice1end
 	moveq	#2,d4
@@ -344,7 +344,7 @@ tp_playvoice0end:
 	bsr	tp_playvoice
 tp_playvoice1end:
 	move	26(a1),$b4(a5)
-	lea	tp_voice2dat+1,a1
+	lea	tp_voice2dat+1(pc),a1
 	addq.b	#2,(a1)+
 	bmi.s	tp_playvoice2end
 	moveq	#4,d4
@@ -352,7 +352,7 @@ tp_playvoice1end:
 	bsr	tp_playvoice
 tp_playvoice2end:
 	move	26(a1),$c4(a5)
-	lea	tp_voice3dat+1,a1
+	lea	tp_voice3dat+1(pc),a1
 	addq.b	#2,(a1)+
 	bmi.s	tp_playvoice3end
 	moveq	#8,d4
@@ -360,12 +360,12 @@ tp_playvoice2end:
 	bsr.s	tp_playvoice
 tp_playvoice3end:
 	move	26(a1),$d4(a5)
-	move.b	tp_dmaon+1,d4
+	move.b	tp_dmaon+1(pc),d4
 tp_initnewsamples:
 	move	d4,$94(a5)
-	lea	tp_dmaonint,a1
+	lea	tp_dmaonint(pc),a1
 	if	vbruse
-	move.l	tp_vbr,a2
+	move.l	tp_vbr(pc),a2
 	move.l	a1,$78(a2)
 	else
 	move.l	a1,$78.w
@@ -373,7 +373,7 @@ tp_initnewsamples:
 	move.b	#$19,$bfdf00
 	if	funk
 tp_funkit:
-	lea	tp_voice0dat+48,a1
+	lea	tp_voice0dat+48(pc),a1
 	moveq	#3,d7
 tp_funkloop:
 	move.b	(a1)+,d4
@@ -424,7 +424,7 @@ tp_noupperinst:
 	movem.l	tp_instlist-tp_wait-16(a0,d1.w),d5-d7/a4
 	movem.l	d5-d7/a4,4(a1)
 	if	volume
-	mulu	tp_volume,d5
+	mulu	tp_volume(pc),d5
 	lsr	#8,d5
 	endc
 	move	d5,8(a3)
@@ -578,7 +578,7 @@ tp_voicefx0:
 	move	(a1)+,d1
 	move	18(a1),d0
 	move	(a0),d2
-	sub	tp_speed,d2
+	sub	tp_speed(pc),d2
 	move.b	tp_voicefx0-1(pc,d2.w),d2
 	beq.s	tp_arp0
 	bmi.s	tp_arp2
@@ -760,7 +760,7 @@ tp_voicefxalab1:
 tp_voicefxaend:
 	move	d1,4(a1)
 	if	volume
-	mulu	tp_volume,d1
+	mulu	tp_volume(pc),d1
 	lsr	#8,d1
 	endc
 	move	d1,8(a3)
@@ -817,7 +817,7 @@ tp_voicefx7noneg:
 	move	d1,d0
 tp_voicefx7ok:
 	if	volume
-	mulu	tp_volume,d0
+	mulu	tp_volume(pc),d0
 	lsr	#8,d0
 	endc
 	move	d0,8(a3)
@@ -851,7 +851,7 @@ tp_voicefx9funkend:
 	endc
 
 	move.l	(a7),-(a7)
-	lea	tp_voicefx9after,a4
+	lea	tp_voicefx9after(pc),a4
 	move.l	a4,4(a7)
 tp_voicefx9normal:
 	clr	4(a1)
@@ -875,7 +875,7 @@ tp_voicefxb:
 	clr	4(a1)
 	clr	tp_pattcount-tp_wait(a0)
 	move	6(a1),d1
-	move.l	tp_pattadr3,a1
+	move.l	tp_pattadr3(pc),a1
 	add.w	d1,d1
 	add.w	d1,a1
 	move.l	a1,tp_pattadr-tp_wait(a0)
@@ -885,7 +885,7 @@ tp_voicefxc:
 	move	6(a1),d1
 	move	d1,10(a1)
 	if	volume
-	mulu	tp_volume,d1
+	mulu	tp_volume(pc),d1
 	lsr	#8,d1
 	endc
 	move	d1,8(a3)
@@ -1020,7 +1020,7 @@ tp_voicefxe6doloop:
 tp_voicefxe6end:
 	rts
 tp_voicefxe6start:
-	move	tp_pattcount,50(a1)
+	move	tp_pattcount(pc),50(a1)
 	rts
 
 tp_voicefxe7:
@@ -1048,7 +1048,7 @@ tp_voicefxe9end:
 	rts
 tp_voicefxe9do:
 	moveq	#0,d1
-	move	tp_speed,d1
+	move	tp_speed(pc),d1
 	sub	(a0),d1
 	divu	(a1),d1
 	swap	d1
@@ -1128,35 +1128,35 @@ tp_voicefxee:
 tp_dmaonint:
 	tst.b	$bfdd00
 	move.b	#$19,$bfdf00
-	move	tp_dmaon,$dff096
+	move	tp_dmaon(pc),$dff096
 	if	vbruse
 	move.l	a0,-(a7)
-	move.l	tp_vbr,a0
-	move.l	tp_int3pon,$78(a0)
+	move.l	tp_vbr(pc),a0
+	move.l	tp_int3pon(pc),$78(a0)
 	move.l	(a7)+,a0
 	else
-	move.l	tp_int3pon,$78.w
+	move.l	tp_int3pon(pc),$78.w
 	endc
 	move	#$2000,$dff09c
 	rte
 
 tp_voiceloopint:
 	tst.b	$bfdd00
-	move.l	tp_voice0dat+18,$dff0a0
-	move	tp_voice0dat+24,$dff0a4
-	move.l	tp_voice1dat+18,$dff0b0
-	move	tp_voice1dat+24,$dff0b4
-	move.l	tp_voice2dat+18,$dff0c0
-	move	tp_voice2dat+24,$dff0c4
-	move.l	tp_voice3dat+18,$dff0d0
-	move	tp_voice3dat+24,$dff0d4
+	move.l	tp_voice0dat+18(pc),$dff0a0
+	move	tp_voice0dat+24(pc),$dff0a4
+	move.l	tp_voice1dat+18(pc),$dff0b0
+	move	tp_voice1dat+24(pc),$dff0b4
+	move.l	tp_voice2dat+18(pc),$dff0c0
+	move	tp_voice2dat+24(pc),$dff0c4
+	move.l	tp_voice3dat+18(pc),$dff0d0
+	move	tp_voice3dat+24(pc),$dff0d4
 	if	vbruse
 	move.l	a0,-(a7)
-	move.l	tp_vbr,a0
-	move.l	tp_int1pon,$78(a0)
+	move.l	tp_vbr(pc),a0
+	move.l	tp_int1pon(pc),$78(a0)
 	move.l	(a7)+,a0
 	else
-	move.l	tp_int1pon,$78.w
+	move.l	tp_int1pon(pc),$78.w
 	endc
 	move	#$2000,$dff09c
 	rte
@@ -1296,7 +1296,7 @@ setc:	swap	d0
 	add.l	#$11a8,d0
 	dbra	d7,Setc
 
-	lea	copper,a0
+	lea	copper(pc),a0
 	move.l	a0,$dff080
 	move.w	d0,$dff088
 
@@ -1602,16 +1602,7 @@ make5:	ds.l	5*256+4
 	dc.l	$fffffffe
 
 
-copper:	dc.l	$009683e0
-
-	dc.l	$01200000,$01220000
-	dc.l	$01240000,$01260000
-	dc.l	$01280000,$012a0000
-	dc.l	$012c0000,$012e0000
-	dc.l	$01300000,$01320000
-	dc.l	$01340000,$01360000
-	dc.l	$01380000,$013a0000
-	dc.l	$013c0000,$013e0000
+copper:	dc.l	$009683e0,$00960020
 
 	dc.l	$008e2c50,$00902cc1
 	dc.l	$01080000,$010a0000,$01020000
