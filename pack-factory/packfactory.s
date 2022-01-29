@@ -28,7 +28,7 @@ text	; pierwsze 4 linie mo±na wyko±ystaç (ya!) na jakieß rø±ne ±eczy np. nr.
 ; Max. 16. pozycji.
 
 scrolltext
-	dc.b	' RMB CACHE OFF   WLCOME IN A NEW ISSUE OF PACK FACTORY BY ILLUSION. CREDITS  CODE BY NIUNIEK OF ILLUSION, GFX BY MAGOR OF PIL, MUSIC BY MTC OF ILLUSION.  ASCII LOGO BY TROPPER OF ANALOG,  SUPPORT BY BLAST OF ENERGY.  FOR SUPPORT THIS PACK WRITE TO:   QBA OF ILLUSION    P.O. BOX 105    12-100 SZCZYTNO    POLAND (THIS ADDY ALSO FOR SWAP).   NOW GREETZ FROM QBA TO: ABYSS (SKINDIVER), ALCATRAZ (STING), ANALOG (TROPPER), APPENDIX (ESC), APPLAUSE (BACKFIRE, LOVELY, PHANTOM, ROBERTS), ARISE (VIRUS), BLAZE (SKY, SLAYER), BONZAI (MDB), BRONX (TURBO), CASYOPEA (BARTESEK, EDI), CREDO, (TORMENTOR), DAMAGE (MEPHI, MIKLESZ), DAMONES (MESSERSCHMITT), DELICIOUS (DADDY FREDDY), DIFFUSION (ASTRAL), D.N.A. (JARKO), EFFECT (RADAVI), ENERGY (BLAST), ESKIMOS (DANY KANE), F.C.I. (CARLO, CHMIEL, DREAMER, ZIBI), FUN FUCTORY (QQLEK), FUNZINE (METAL), GENERATION (CDX), GRAVITY (ADOX), HUMANS (JUTU, SCRABY), IDK (UFO), INFECTION (RADZIK), ILLUSION (AXEL D., DEATH ANGEL, NIUNIEK, PEPE, RYGAR, SIGGE, STAN, THE KING, VEROX), INDEPENDET (ANDREAS, DESTROY, MARCO, PABLO), INTENSE (FICTION), INTERACTIVE (DODGER), INQUISITION (ENDER),  IRIS (MINO 63, PANTERA), KEFRENS (ZINKO), LAMERS (LAMESOFT), LBD (RANGER), LIME (GROGGY), LSD (DENZIL), MAD ELKS (ALICE, ALIS, AVENGER, IRON, RED MAN), MAGIC 12 (ZOZO), MAYHEM (GOOCIOO), METRO (KURSEN), MYSTIC (MARS, XTD), OBSCENE (AIR), OBSESSION (LATRO, WARHAWK), ORION (CHITIN, VADIUM), OUTLAWS (FATE), PIL (GOODMAN, MAGOR), PLC (MOWGLIE), POLKA BROTHERS (ZINKO), PRIDE (DOMIN, KAJETAN), PSL (CORNER), PULSE (DONK), RAM JAM (MOGUL), RAZOR 1911 (COLORBIRD), REVOLT CELLS (SZUWAR), S!P (GENERAL LEE), SAINTS (WOOBER), SAINTS GROUP (ARAGO), SCOOPEX (CHRIS, MR.KING), SCOPE (TRASH HEAD, QWERTY), SKULLS (LARRY), SPASM (OXTONE), SPEEDY (BREAK BEAT), STATUS O.K. (GOSCIAK), SUSPIRIA (FERIX), SYGMA (TESUO), TECHNOLOGY (IMMORTAL), TILT (EXOLON), TURNIPS (DR.MULAK), THE EDGE (BODZIO, UNHOLY), THE WAVE (CETRIX), TRANCE (PRODIGY), TRSI (BALD HORSE, NORBY, PYTHON, TEES), UNLIMITED (THE BRAIN), VALUM (DEVTER), VEGA (KRATKA), X-TREME (PET)   '
+	dc.b	' RMB CACHE OFF   WELCOME TO A NEW ISSUE OF PACK FACTORY BY ILLUSION. CREDITS  CODE BY NIUNIEK OF ILLUSION, GFX BY MAGOR OF PIL, MUSIC BY MTC OF ILLUSION.  ASCII LOGO BY TROPPER OF ANALOG,  SUPPORT BY BLAST OF ENERGY.  FOR SUPPORT THIS PACK WRITE TO:   QBA OF ILLUSION    P.O. BOX 105    12-100 SZCZYTNO    POLAND (THIS ADDY ALSO FOR SWAP).   NOW GREETZ FROM QBA TO: ABYSS (SKINDIVER), ALCATRAZ (STING), ANALOG (TROPPER), APPENDIX (ESC), APPLAUSE (BACKFIRE, LOVELY, PHANTOM, ROBERTS), ARISE (VIRUS), BLAZE (SKY, SLAYER), BONZAI (MDB), BRONX (TURBO), CASYOPEA (BARTESEK, EDI), CREDO, (TORMENTOR), DAMAGE (MEPHI, MIKLESZ), DAMONES (MESSERSCHMITT), DELICIOUS (DADDY FREDDY), DIFFUSION (ASTRAL), D.N.A. (JARKO), EFFECT (RADAVI), ENERGY (BLAST), ESKIMOS (DANY KANE), F.C.I. (CARLO, CHMIEL, DREAMER, ZIBI), FUN FUCTORY (QQLEK), FUNZINE (METAL), GENERATION (CDX), GRAVITY (ADOX), HUMANS (JUTU, SCRABY), IDK (UFO), INFECTION (RADZIK), ILLUSION (AXEL D., DEATH ANGEL, NIUNIEK, PEPE, RYGAR, SIGGE, STAN, THE KING, VEROX), INDEPENDET (ANDREAS, DESTROY, MARCO, PABLO), INTENSE (FICTION), INTERACTIVE (DODGER), INQUISITION (ENDER),  IRIS (MINO 63, PANTERA), KEFRENS (ZINKO), LAMERS (LAMESOFT), LBD (RANGER), LIME (GROGGY), LSD (DENZIL), MAD ELKS (ALICE, ALIS, AVENGER, IRON, RED MAN), MAGIC 12 (ZOZO), MAYHEM (GOOCIOO), METRO (KURSEN), MYSTIC (MARS, XTD), OBSCENE (AIR), OBSESSION (LATRO, WARHAWK), ORION (CHITIN, VADIUM), OUTLAWS (FATE), PIL (GOODMAN, MAGOR), PLC (MOWGLIE), POLKA BROTHERS (ZINKO), PRIDE (DOMIN, KAJETAN), PSL (CORNER), PULSE (DONK), RAM JAM (MOGUL), RAZOR 1911 (COLORBIRD), REVOLT CELLS (SZUWAR), S!P (GENERAL LEE), SAINTS (WOOBER), SAINTS GROUP (ARAGO), SCOOPEX (CHRIS, MR.KING), SCOPE (TRASH HEAD, QWERTY), SKULLS (LARRY), SPASM (OXTONE), SPEEDY (BREAK BEAT), STATUS O.K. (GOSCIAK), SUSPIRIA (FERIX), SYGMA (TESUO), TECHNOLOGY (IMMORTAL), TILT (EXOLON), TURNIPS (DR.MULAK), THE EDGE (BODZIO, UNHOLY), THE WAVE (CETRIX), TRANCE (PRODIGY), TRSI (BALD HORSE, NORBY, PYTHON, TEES), UNLIMITED (THE BRAIN), VALUM (DEVTER), VEGA (KRATKA), X-TREME (PET)   '
 	DC.B	'        TEXT RESTART                 '
 	DC.B	' ',0
 	even
@@ -75,14 +75,14 @@ Startq	jsr	mt_init
 	clr.l	d6
 	bra.W	Postaw
 
-main	cmpi.b	#$2f,$dff006
+main	cmpi.b	#$ff,$dff006
 	bne.b	MAIN
 
+	bsr.w	scroll
 	bsr.w	sinusek
-	BSR.W	WPISZSINUSEK
-	bsr.w	mt_music
 	bsr.w	sprpoz
-tu	bsr.w	scroll
+	bsr.w	mt_music
+tu
 	btst	#2,$dff016
 	bne	niemap
 	bsr.w	mt_end
@@ -134,14 +134,14 @@ exit:	bsr.w	mt_end
 
 	lea	Intlib,a1
 	move.l	$4.w,a6
-	clr.l	d0
+	moveq	#0,d0
 	jsr	-$228(a6)
 	move.l	d0,a6
 	lea	sin,a5
 qmov	move.w	(a5)+,d1
 	beq	koniec
 	neg.w	d1
-	clr.l	d0
+	moveq	#0,d0
 	move.l	scree,a0
 	jsr	-$a2(a6)
 	bra	qmov
@@ -149,8 +149,8 @@ koniec	move.l	$4.w,a6
 	jsr	-$7e(a6)
 	jsr	-$8a(a6)
 	move.W	WEKTO,d0
-	divu	#16,d0
-	addq	#1,d0	
+	asr.w	#4,d0
+	addq.w	#1,d0	
 	move.w	d0,0
 	moveq	#0,d0
 	rts
@@ -166,33 +166,46 @@ sprpoz		lea	$dff000,a6
 		MOVE.L	#$09f00000,$40(A6)	;USE A,D LFx :D=A
 		MOVE.L	#$000000AA,$64(A6)
 		lea	Menus,a0
-		clr.l	d0
+		moveq	#0,d0
 		move.w	wekto(PC),d0
-		mulu	#30,d0
+		mulu.w	#30,d0
 		add.l	d0,a0
 		move.l	a0,$50(A6)	;SOURC
 		MOVE.L	#obraz+200*60+40,$54(A6)	;DEST
 		MOVE.W	#156*64+30/2,$58(a6)
-		clr.W	d0
+		moveq	#0,d0
 		move.b	$dff00a,d0
 		and.b	#jakiruch,d0
-		cmp.b	#(ilepozycji*16)-16,d0
-		bcc	rt
-		cmp.b	#0,d0
-		bls	rt2
-		
-		move.w	d0,wekto
+
+		ext.w	d0
+		move.w	oldpos,d1
+		muls.w	d0,d1
+		bge.b	GreaterZero
+		move.w	d0,oldpos
+GreaterZero
+
+		move.w	d0,d1
+		sub.w	oldpos,d1
+		move.w	d0,oldpos
+		add.w	d1,wekto
+		move.w	wekto,d0
+		cmp.w	#[ilepozycji-1]*16,d0
+		bge.b	rt
+		tst.w	d0
+		ble.b	rt2
 		rts
+oldpos:		dc.w	0
 
 rt		move.w	#(ilepozycji*16)-16,wekto
 		rts	
-rt2		move.w	#0,wekto
+rt2		clr.w	wekto
 		rts	
 ;*/*/*/*/*/*/*/*/*/*/*/*/**/
-scroll		addq.w	#1,d6
+scroll		lea	$dff000,a6
+		addq.w	#1,d6
  		cmpi.w	#8,d6
  		bne.b	SCROLL2
-		moveq	#1,d6		
+		moveq	#0,d6		
 scroll2		BTST	#14,$02(A6)
 		BNE.B	scroll2
 		MOVE.l	#$0fffffff,$44(A6)
@@ -201,6 +214,8 @@ scroll2		BTST	#14,$02(A6)
 		MOVE.L	#obraz2+200*33,$50(A6)	;SOURCE
 		MOVE.L	#obraz2+200*33,$54(A6)	;DEST
 		MOVE.W	#32*5*64+40/2,$58(a6)
+
+		bsr.w	wpiszsinusek
 
 scroll3		BTST	#14,$02(A6)
 		BNE.B	scroll3
@@ -215,7 +230,7 @@ scroll3		BTST	#14,$02(A6)
 		bne.b	lenin
 		lea	scrolltext(pc),a0
 		move.w	licz(pc),d0
-		clr.l	d1
+		moveq	#0,d1
 		move.b	(a0,d0.w),d1
 		addQ.w	#1,licz
 		tst.b	d1
@@ -340,8 +355,8 @@ WsCont	move.l	d0,(a0)+
 	move.w	#$e2,(a0)+
 	swap	d0
 	move.w	d0,(a0)+
-	lea	DupafrajerMojamama,a1
-	move.l	#31,d0
+	lea	DupafrajerMojamama(pc),a1
+	moveq	#31,d0
 poprawkolory
 	move.l	(a1)+,(a0)+
 	dbf	d0,poprawkolory
@@ -394,7 +409,7 @@ bufbuf	blk.w	180*3,0
 sinusek	MOVE.L	WskSinI(pc),A0
 	MOVE.L	SinusII(pc),A1
 	MOVE.W	#160,D5
-	lea	bufbuf,a4
+	lea	bufbuf(pc),a4
 sinLoop	MOVE.W	(A0)+,D0
 	asl.w	#1,d0
 	add.W	(A1)+,D0
@@ -404,7 +419,7 @@ sinLoop	MOVE.W	(A0)+,D0
 gfg	and.w	#fajne,d0
 	move.w	d0,(a4)+
 	lea	paski,a2
-	mulu	#40,d0
+	mulu.w	#40,d0
 	
 	add.l	d0,a2
 	MOVE.L	A2,(A4)+
