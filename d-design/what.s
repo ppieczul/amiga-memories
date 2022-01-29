@@ -1156,20 +1156,43 @@ sinus:
 	DC.B	$34,$0F,$32,$03,$2F,$F2,$2D,$DE
 	DC.B	$2B,$C6,$29,$AB,$27,$8D,$25,$6C
 	DC.B	$23,$47,$21,$20,$1E,$F7,$1C,$CA
-	DC.B	$1A,$9C,$18,$6C,$16,$39,$14,$05
-	DC.B	$11,$D0,$0F,$99,$0D,$61,$0B,$27
-	DC.B	$08,$ED,$06,$B2,$04,$77,$02,$3B
-	DC.B	$00,$00,$FD,$C4,$FB,$88,$F9,$4D
-	DC.B	$F7,$12,$F4,$D8,$F2,$9E,$F0,$66
-	DC.B	$EE,$2F,$EB,$FA,$E9,$C6,$E7,$93
-	DC.B	$E5,$63,$E3,$35,$E1,$08,$DE,$DF
-	DC.B	$DC,$B8,$DA,$93,$D8,$72,$D6,$54
-	DC.B	$D4,$39,$D2,$21,$D0,$0D,$CD,$FC
-	DC.B	$CB,$F0,$C9,$E8,$C7,$E3,$C5,$E4
-	DC.B	$C3,$E8,$C1,$F2,$C0,$00,$BE,$13
-	DC.B	$BC,$2C,$BA,$49,$B8,$6C,$B6,$95
-	DC.B	$B4,$C4,$B2,$F8,$B1,$32,$AF,$73
-	DC.B	$AD,$B9,$AC,$06,$AA,$5A,$A8,$B4
+	DC.B	$d.w	#128,2(a0)
+
+	lea	mul40,a1
+	lea	$dff000,a5
+
+	move.w	(a0),d0
+	cmp.w	2(a0),d0
+	beq.w	l_quit2
+	bhi.b	l_noych2
+	move.w	2(a0),(a0)
+	move.w	d0,2(a0)
+	move.w	4(a0),d0
+	move.w	6(a0),4(a0)
+	move.w	d0,6(a0)
+l_noych2:subq.w	#1,(a0)
+
+	move.w	4(a0),d0
+	move.w	(a0),d1
+	move.w	6(a0),d2
+	move.w	2(a0),d3
+	move.l	scract2,a6
+
+	moveq	#0,d4
+	move.w	d1,d4
+	add.w	d4,d4
+
+	move.w	(a1,d4.w),d4
+	moveq	#-$10,d5
+	and.w	d0,d5
+	lsr.w	#3,d5
+	add.w	d5,d4
+	add.l	a6,d4
+
+	moveq	#0,d5
+	sub.w	d1,d3
+	roxl.b	#1,d5
+	tst.DC.B	$AD,$B9,$AC,$06,$AA,$5A,$A8,$B4
 	DC.B	$A7,$16,$A5,$7E,$A3,$ED,$A2,$63
 	DC.B	$A0,$E1,$9F,$66,$9D,$F3,$9C,$87
 	DC.B	$9B,$23,$99,$C7,$98,$72,$97,$26
